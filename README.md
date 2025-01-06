@@ -1,40 +1,58 @@
-# MediaPipe Tasks Hand Landmark Detection Android Demo
+# Sign language prediction based on hand landmark using tensorflow lite.
 
-### Overview
+Welcome to the Hand Landmarker Android example project! This project demonstrates how to use hand landmark detection in an Android application to predict sign language characters using a TensorFlow Lite model trained in an earlier repository.
 
-This is a camera app that can  detects hand landmarks either from continuous camera frames seen by your device's front camera, an image, or a video from the device's gallery using a custom **task** file.
+## Table of Contents
 
-The task file is downloaded by a Gradle script when you build and run the app. You don't need to do any additional steps to download task files into the project explicitly unless you wish to use your own landmark detection task. If you do use your own task file, place it into the app's *assets* directory.
+- [Introduction](#introduction)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
 
-This application should be run on a physical Android device to take advantage of the camera.
+## Introduction
 
-![Hand Landmark Detection Demo](landmarker.gif?raw=true "Hand Landmark Detection Demo")
+This project showcases the implementation of hand landmark detection using machine learning models on an Android platform. It provides a real-time hand tracking experience by identifying key points on the hand and predicting sign language characters.
 
-## Build the demo using Android Studio
+## Features
 
-### Prerequisites
+- Real-time hand landmark detection
+- Sign language character prediction
+- Easy integration with Android applications
+- High accuracy and performance
 
-*   The **[Android Studio](https://developer.android.com/studio/index.html)** IDE. This sample has been tested on Android Studio Dolphin.
+## Requirements
 
-*   A physical Android device with a minimum OS version of SDK 24 (Android 7.0 -
-    Nougat) with developer mode enabled. The process of enabling developer mode
-    may vary by device.
+- Android Studio 4.0 or higher
+- Android device with camera support
+- Minimum SDK version 21
 
-### Building
+## Installation
 
-*   Open Android Studio. From the Welcome screen, select Open an existing
-    Android Studio project.
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/yourusername/hand_landmarker_android.git
+   ```
+2. Open the project in Android Studio.
+3. Sync the project with Gradle files.
+4. Build and run the application on your Android device.
+5. You can download the apk test out the app from this [link](https://lut-my.sharepoint.com/:u:/g/personal/mahi_talukder_student_lut_fi/EZM8m7IetShMolTYPE6DPXkBfAM3Nop4aV7j66AOvOqwPA?e=d9qYmi)
 
-*   From the Open File or Project window that appears, navigate to and select
-    the mediapipe/examples/hand_landmarker/android directory. Click OK. You may
-    be asked if you trust the project. Select Trust.
+## Usage
 
-*   If it asks you to do a Gradle Sync, click OK.
+1. Launch the application on your Android device.
+2. Grant camera permissions if prompted.
+3. Point the camera at your hand to see real-time hand landmark detection and sign language character prediction.
+4. Sign language chatachters for practice:
+   ![image](./signs.png)
 
-*   With your Android device connected to your computer and developer mode
-    enabled, click on the green Run arrow in Android Studio.
+## Contributing
 
-### Models used
+We welcome contributions to improve this project! Please follow these steps to contribute:
 
-Downloading, extraction, and placing the models into the *assets* folder is
-managed automatically by the **download.gradle** file.
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes and commit them (`git commit -m 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Open a pull request.
