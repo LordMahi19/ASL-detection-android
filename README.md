@@ -1,5 +1,7 @@
 # Sign language prediction based on hand landmark using tensorflow lite.
 
+This project is continuation of this [project](https://github.com/LordMahi19/ASL-detection-tensorflow-model). Please visit that repository first for more insight.
+
 Welcome to the Hand Landmarker Android example project! This project demonstrates how to use hand landmark detection in an Android application to predict sign language characters using a TensorFlow Lite model trained in an earlier repository.
 
 ## Table of Contents
