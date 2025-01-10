@@ -21,11 +21,6 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class CameraFragment : Fragment(), HandLandmarkerHelper.LandmarkerListener {
-
-    companion object {
-        private const val TAG = "Hand Landmarker"
-    }
-
     private var _fragmentCameraBinding: FragmentCameraBinding? = null
     private val fragmentCameraBinding get() = _fragmentCameraBinding!!
     private lateinit var handLandmarkerHelper: HandLandmarkerHelper
@@ -36,15 +31,6 @@ class CameraFragment : Fragment(), HandLandmarkerHelper.LandmarkerListener {
     private var cameraProvider: ProcessCameraProvider? = null
     private var cameraFacing = CameraSelector.LENS_FACING_FRONT
     private lateinit var backgroundExecutor: ExecutorService
-
-    override fun onResume() {
-        super.onResume()
-        backgroundExecutor.execute {
-            if (handLandmarkerHelper.isClose()) {
-                handLandmarkerHelper.setupHandLandmarker()
-            }
-        }
-    }
 
     override fun onDestroyView() {
         _fragmentCameraBinding = null
@@ -69,16 +55,10 @@ class CameraFragment : Fragment(), HandLandmarkerHelper.LandmarkerListener {
         predictionTextView = fragmentCameraBinding.predictionText
         fragmentCameraBinding.overlay.setPredictionTextView(predictionTextView)
 
+        handLandmarkerHelper = HandLandmarkerHelper(requireContext(), this)
+
         fragmentCameraBinding.viewFinder.post {
             setUpCamera()
-        }
-
-        backgroundExecutor.execute {
-            handLandmarkerHelper = HandLandmarkerHelper(
-                context = requireContext(),
-                runningMode = RunningMode.LIVE_STREAM,
-                handLandmarkerHelperListener = this
-            )
         }
     }
 
@@ -156,5 +136,9 @@ class CameraFragment : Fragment(), HandLandmarkerHelper.LandmarkerListener {
         activity?.runOnUiThread {
             Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    companion object {
+        private const val TAG = "Hand Landmarker"
     }
 }
