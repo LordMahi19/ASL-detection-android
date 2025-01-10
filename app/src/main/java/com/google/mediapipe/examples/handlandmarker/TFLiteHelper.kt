@@ -12,13 +12,10 @@ class TFLiteHelper(context: Context) {
     private val labels: List<String>
 
     init {
-        // Load TFLite model
         val model = loadModelFile(context, "model.tflite")
         interpreter = Interpreter(model, Interpreter.Options().apply {
-            setNumThreads(4) // Adjust number of threads as necessary
+            setNumThreads(4)
         })
-
-        // Load labels
         labels = context.assets.open("labels.txt").bufferedReader().useLines { it.toList() }
     }
 
@@ -32,41 +29,25 @@ class TFLiteHelper(context: Context) {
     }
 
     fun predict(inputData: FloatArray): Int {
-        // Ensure input data is reshaped and normalized
         val inputBuffer = ByteBuffer.allocateDirect(inputData.size * 4).apply {
             order(ByteOrder.nativeOrder())
             for (value in inputData) {
-                putFloat(value) // Assume inputData is already scaled appropriately
+                putFloat(value)
             }
         }
 
-        // Define the output buffer to match the model's output shape
         val outputBuffer = ByteBuffer.allocateDirect(29 * 4).apply {
             order(ByteOrder.nativeOrder())
         }
 
-        try {
-            // Run inference with the model
-            interpreter.run(inputBuffer, outputBuffer)
-        } catch (e: IllegalArgumentException) {
-            Log.e("TFLiteHelper", "Error during inference: ${e.message}")
-            throw e // Optional: Re-throw to handle the error in the caller
-        }
+        interpreter.run(inputBuffer, outputBuffer)
 
-        // Extract predictions
         outputBuffer.rewind()
         val outputArray = FloatArray(29)
         outputBuffer.asFloatBuffer().get(outputArray)
 
-        // Log input and output for debugging
-        Log.d("TFLiteHelper", "Input: ${inputData.joinToString()}")
-        Log.d("TFLiteHelper", "Output: ${outputArray.joinToString()}")
-
-        // Find the index of the maximum probability
         return outputArray.indices.maxByOrNull { outputArray[it] } ?: -1
     }
 
-    fun getLabel(index: Int): String {
-        return if (index in labels.indices) labels[index] else "Unknown"
-    }
+    fun getLabel(index: Int): String = if (index in labels.indices) labels[index] else "Unknown"
 }
